@@ -1,0 +1,138 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "My User Project CRUD",
+    "description": "My User Project Application API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Calculator",
+      "description": "API for Calculus in the system"
+    }
+  ],
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/calculator/add": {
+      "get": {
+        "tags": ["Addition Service"],
+        "summary": "Add 2 numbers",
+        "parameters": [
+          {
+            "name": "num1",
+            "in": "query",
+            "description": "the First Number"
+          },
+          {
+            "name": "num2",
+            "in": "query",
+            "description": "the Second Number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This service allows you to add two numbers together"
+          }
+        }
+      }
+    },
+    "/calculator/sub": {
+      "get": {
+        "tags": ["Subtraction Service"],
+        "summary": "Subtract 2 numbers",
+        "parameters": [
+          {
+            "name": "num1",
+            "in": "query",
+            "description": "the First Number"
+          },
+          {
+            "name": "num2",
+            "in": "query",
+            "description": "the Second Number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This service allows you to add two numbers together"
+          }
+        }
+      }
+    },
+    "/calculator/div": {
+      "get": {
+        "tags": ["Division Service"],
+        "summary": "Division of 2 numbers",
+        "parameters": [
+          {
+            "name": "num1",
+            "in": "query",
+            "description": "the First Number"
+          },
+          {
+            "name": "num2",
+            "in": "query",
+            "description": "the Second Number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This service allows you to add two numbers together"
+          }
+        }
+      }
+    },
+    "/calculator/prod": {
+      "get": {
+        "tags": ["Multiplication Service"],
+        "summary": "Product of 2 numbers",
+        "parameters": [
+          {
+            "name": "num1",
+            "in": "query",
+            "description": "the First Number"
+          },
+          {
+            "name": "num2",
+            "in": "query",
+            "description": "the Second Number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "This service allows you to add two numbers together"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": ["Post login information"],
+        "summary": "Checks for correct user Id",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "body",
+            "description": "the user Id in uuid format"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "A user with the specified Id was not found"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,104 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Courier New", Courier, monospace;
+}
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #333; /*change this to match figma*/
+}
+
+.calculator {
+  position: relative;
+  width: 90%; /* adjust width as necessary */
+  max-width: 400px; /* set a max width to prevent the calculator from getting too large on larger screens */
+  margin: 0 auto; /* center calculator horizontally */
+}
+.calculator .buttons {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(
+    4,
+    1fr
+  ); /* set grid template columns to 4 equal columns */
+  gap: 10px; /* add some spacing between buttons */
+}
+.calculator .buttons #value {
+  display: flex;
+  flex-wrap: wrap; /*have to set this section to flex to center output calculations*/
+  position: relative;
+  justify-content: center; /*aligns center for personal flavor*/
+  left: 8px;
+  margin-bottom: 12px;
+  grid-column: span 4;
+  height: 20vh; /* set height based on viewport height */
+  height: 200px;
+  align-items: center;
+  line-height: 100px;
+  padding: 0 20px;
+  border-radius: 10px;
+  background: #d9d9d9;
+  text-align: right;
+  font-size: 2rem; /* increase font size for larger screens */
+  color: #3a3c2e;
+  overflow: hidden;
+  box-shadow: inset 0 6px 1px 0 rgba(0, 0, 0, 0.35),
+    0 5px 5px rgba(0, 0, 0, 0.5), 0 15px 25px rgba(0, 0, 0, 0.35);
+  user-select: none;
+  width: calc(100% - 16px);
+}
+.calculator .buttons span {
+  position: relative;
+  padding: 10px;
+  margin: 6px;
+  min-width: 40px;
+  font-size: 1.5rem; /* increase font size for larger screens */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #e6e6e6;
+  border: 2px solid #222;
+  border-radius: 6px;
+  background: linear-gradient(#4e4c4c, #908C8C);
+  box-shadow: inset 0 6px 1px 0 rgba(0, 0, 0, 0.35),
+    0 5px 5px rgba(0, 0, 0, 0.5), 0 15px 25px rgba(0, 0, 0, 0.35);
+}
+.calculator .buttons #value::before {
+  content: "";
+  position: absolute;
+  inset: 5px 3px;
+  border-top: 1px solid #ccc;
+  filter: blur(2px);
+}
+.calculator .buttons span::before {
+  content: "";
+  position: absolute;
+  inset: 5px 3px;
+  border-top: 1px solid #ccc;
+  filter: blur(2px);
+}
+.calculator .buttons span:active {
+  box-shadow: inset 0 2px 2px 0 rgba(0, 0, 0, 0.35),
+    inset 0 5px 15px rgba(0, 0, 0, 0.5), inset 0 15px 25px rgba(0, 0, 0, 0.35);
+  color: #fff;
+  text-shadow: 0 0 5px #219cf3, 0 0 8px #219cf3;
+}
+.calculator .buttons span#clear {
+  grid-column: span 2;
+  background: #c2342a;
+  color: #e6e6e6;
+}
+.calculator .buttons span#plus {
+  grid-row: span 2;
+  background: #337835;
+  color: #fff;
+}
+.calculator .buttons span#equal {
+  grid-row: span 2;
+  background: #2a7aba;
+  color: #fff;
+}
