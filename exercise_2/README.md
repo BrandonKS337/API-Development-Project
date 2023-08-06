@@ -10,3 +10,9 @@ Requirements
 -Other users should be able to like and comment on posts
 
 Will need to inset the ability to react to posts.
+
+will need a .env file that contains the local host path for my_blog_db in mongodb. Please let me know if you need this sent off to you I have it available at request
+
+to start make sure to run nodemon or node
+aka in bash terminal 
+$nodemon server.js

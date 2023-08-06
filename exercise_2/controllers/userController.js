@@ -1,7 +1,6 @@
 "use strict";
 
 const Models = require("../models");
-const bcrypt = require('bcrypt')
 
 const getUsers = (res) => {
   Models.User.findAll({})
@@ -13,31 +12,12 @@ const getUsers = (res) => {
       throw err;
     });
 };
-const getUsersById = (req, res) => {
-  Models.User.findAll({
-      where: { id: req.params.id }
-  })
-    .then(function (data) {
-      res.send({ result: 200, data: data });
-    })
-    .catch((err) => {
-      console.log("Error: ", err);
-      throw err;
-    });
-};
 
-const getUsersByIdTestPassword = (req, res) => {
-  const unhashedPassword = req.body.password
+const getUsersById = (req, res) => {
     Models.User.findAll({
         where: { id: req.params.id }
     })
-      .then((data) => {
-        if (data && bycrpt.compareSync(unhashedPassword, data.password)) {
-          console.log('password correct')
-        } else {
-          console.log('password not right yo')
-
-        }
+      .then(function (data) {
         res.send({ result: 200, data: data });
       })
       .catch((err) => {
@@ -46,15 +26,9 @@ const getUsersByIdTestPassword = (req, res) => {
       });
   };
 
-const createUsers = async (data, res) => {
-  const salt = await bcrypt.genSaltSync(10, "a");
-  const originalPassword = data.password
-  const hashedPassword = bcrypt.hashSync(data.password, salt)
-  data.password = hashedPassword
-
+const createUser = (data, res) => {
   Models.User.create(data)
-    .then((data) => {
-      data.password = originalPassword;
+    .then(function (data) {
       res.send({ result: 201, data: data });
     })
     .catch((err) => {
@@ -62,18 +36,6 @@ const createUsers = async (data, res) => {
       throw err;
     });
 };
-
-const createPost = (data, res) => {
-  Models.Post.create(data)
-    .then((data) =>{
-      res.send({ result: 201, data: data });
-    })
-    .catch((err) => {
-      console.log("Error: ", err);
-      throw err;
-    });
-};
-
 
 const updateUser = (req, res) => {
   Models.User.update(req.body, { where: { id: req.params.id } })
@@ -100,9 +62,7 @@ const deleteUser = (req, res) => {
 module.exports = {
   getUsers,
   getUsersById,
-  createPost,
-  createUsers,
+  createUser,
   updateUser,
   deleteUser,
-  getUsersByIdTestPassword
 };
