@@ -1,22 +1,35 @@
-"use strict"
+"use strict";
 
-const Mongoose = require("mongoose")
-const uri = process.env.DB_URI || "mongodb://0.0.0.0:27017/my_blog_db"; //change this to different db later
+const { sequelize } = require("sequelize");
 
-const mongooseOptions = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+//sequelize is a pkg that abstracts out the need to write SQL queries
+//relies on the models doing it for you.
+
+const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
+  {
+    host: process.env.DB_HOST,
+    dialect: "mysql",
+  }
+);
+
+const connectMysql = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log(
+      `Successful connection to MySQL Database ${process.env.DB_NAME}`
+    );
+  } catch (error) {
+    console.error("Unable to connect to MySQL database:", error);
+    process.exit(1);
+  }
 };
 
-//Connect to MongoDB
-Mongoose.connect(uri, mongooseOptions)
-  .then(() => console.log("MongoDB Connected"))
-  .catch((error) => console.log("MongoDB Error: " + error.message));
+connectMysql();
 
-// Get the default connection
-const db = Mongoose.connection;
-
-// Bind connection to error event (to get notification of connection errors)
-db.on("error", console.error.bind(console, "MongoDB connection error:"));
-
-exports.Mongoose = Mongoose;
+module.exports = {
+  Sequelize: sequelize,
+  connectMysql,
+};
