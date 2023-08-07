@@ -5,9 +5,10 @@ require("dotenv").config();
 let dbConnect = require("./dbConnect");
 const userRoutes = require('./routes/userRoutes')
 
+// parse requests of content-type - application / json;
 app.use(express.json());
 
-app.use('/api/users', userRoutes)
+app.use('/api/users', userRoutes) //directs traffic for the userRoutes
 
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to my MySQL Application." });

@@ -1,9 +1,6 @@
 const { DataTypes, Model } = require("sequelize");
-
 const dbConnect = require("../dbConnect");
-
 const sequelizeInstance = dbConnect.Sequelize;
-
 class Post extends Model {}
 
 // Sequelize will create this table if it doesn't exist on startup
@@ -24,7 +21,7 @@ Post.init(
       allowNull: false,
     },
     content: {
-      type: DataTypes.TEXT, // Use TEXT data type for potentially large content
+      type: DataTypes.STRING, // Use TEXT data type for potentially large content
       allowNull: false,
       unique: true,
     },
@@ -41,7 +38,7 @@ Post.init(
   },
   {
     sequelize: sequelizeInstance,
-    modelName: "post", // Use singular form for model name
+    modelName: "posts", // Use singular form for model name
     timestamps: true,
     underscored: true, // Use snake_case for column names
   }

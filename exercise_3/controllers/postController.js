@@ -3,7 +3,7 @@ let Models = require("../models"); //matches index.js
 
 const getPosts = (res) => {
   //finds all Posts
-  Models.Posts.find({})
+  Models.Post.find({})
     .then((data) => res.send({ result: 200, data: data }))
     .catch((err) => {
       console.log(err);
@@ -14,7 +14,7 @@ const getPosts = (res) => {
 const createPost = (data, res) => {
   //creates a new Post using JSON data POSTed in request body
   console.log(data);
-  new Models.Posts(data)
+  new Models.Post(data)
     .save()
     .then((data) => res.send({ result: 200, data: data }))
     .catch((err) => {

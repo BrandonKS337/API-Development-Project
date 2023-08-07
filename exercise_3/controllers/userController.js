@@ -61,8 +61,8 @@ const createUsers = async (data, res) => {
     .catch((err) => {
       console.log("Error: ", err);
       throw err;
-    });
-};
+    })
+}
 
 const createPost = (data, res) => {
   Models.Post.create(data)
