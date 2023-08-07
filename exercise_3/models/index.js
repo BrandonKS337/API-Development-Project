@@ -1,18 +1,10 @@
-"use strict";
+// index.js file is going to be used to direct all of the models easily to other files from this single "location".
+// expand this section to build on all files needed
+'use strict'
 
-const User = require("./user"); //require the model
-
-const Post = require("./post") //loads the post model
-
-async function init() {
-  await User.sync(); 
-  await Post.sync();  //syncs the model
-};
-
-
-init();
 
 module.exports = {
-  User, //export the user model
-  Post, //exports the post model
-};
+    User: require('./user'),
+    Posts: require('./posts')
+    
+}

@@ -1,4 +1,4 @@
-module.exports={
+module.exports = {
     userController: require('./userController'),
-    postController: require('./postController')
-    }
+    postsController: require('./postsController')
+}

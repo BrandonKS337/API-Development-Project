@@ -1,19 +1,22 @@
-const mongoose = require('mongoose');
-require('dotenv').config(); // Load environment variables from .env file
+"use strict"
 
-// Get the MongoDB connection URL from the environment variable
-const dbURL = process.env.MONGODB_URI;
+const Mongoose = require("mongoose")
+const uri = process.env.DB_URI || "mongodb://0.0.0.0:27017/my_blog_db"; //change this to different db later
 
-// Set up database connection
-mongoose.connect(dbURL, {
+const mongooseOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  useCreateIndex: true,
-});
+};
 
-const db = mongoose.connection;
+//Connect to MongoDB
+Mongoose.connect(uri, mongooseOptions)
+  .then(() => console.log("MongoDB Connected"))
+  .catch((error) => console.log("MongoDB Error: " + error.message));
 
-db.on('error', console.error.bind(console, 'Connection error:'));
-db.once('open', () => {
-  console.log('Connected to the database');
-});
+// Get the default connection
+const db = Mongoose.connection;
+
+// Bind connection to error event (to get notification of connection errors)
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
+
+exports.Mongoose = Mongoose;

@@ -1,67 +1,54 @@
 "use strict";
-
-const Models = require("../models");
+let Models = require("../models"); //matches index.js
 
 const getUsers = (res) => {
-  Models.User.findAll({})
-    .then(function (data) {
-      res.send({ result: 200, data: data });
-    })
+  //finds all users
+  Models.User.find({})
+    .then((data) => res.send({ result: 200, data: data }))
     .catch((err) => {
-      console.log("Error: ", err);
-      throw err;
+      console.log(err);
+      res.send({ result: 500, error: err.message });
     });
 };
 
-const getUsersById = (req, res) => {
-    Models.User.findAll({
-        where: { id: req.params.id }
-    })
-      .then(function (data) {
-        res.send({ result: 200, data: data });
-      })
-      .catch((err) => {
-        console.log("Error: ", err);
-        throw err;
-      });
-  };
-
 const createUser = (data, res) => {
-  Models.User.create(data)
-    .then(function (data) {
-      res.send({ result: 201, data: data });
-    })
+  //creates a new user using JSON data POSTed in request body
+  console.log(data);
+  new Models.User(data)
+    .save()
+    .then((data) => res.send({ result: 200, data: data }))
     .catch((err) => {
-      console.log("Error: ", err);
-      throw err;
+      console.log(err);
+      res.send({ result: 500, error: err.message });
     });
 };
 
 const updateUser = (req, res) => {
-  Models.User.update(req.body, { where: { id: req.params.id } })
-    .then(function (data) {
-      res.send({ result: 200, data: data });
-    })
+  //updates the user matching the ID from the param using JSON data POSTed in request body
+  console.log(req.body);
+  Models.User.findByIdAndUpdate(req.params.id, req.body, {
+    useFindAndModify: false,
+  })
+    .then((data) => res.send({ result: 200, data: data }))
     .catch((err) => {
-      console.log("Error: ", err);
-      throw err;
+      console.log(err);
+      res.send({ result: 500, error: err.message });
     });
 };
-
 const deleteUser = (req, res) => {
-  Models.User.destroy({ where: { id: req.params.id } })
-    .then(function (data) {
-      res.send({ result: 200, data: data });
-    })
+  //deletes the user matching the ID from the param
+  Models.User.findByIdAndRemove(req.params.id, req.body, {
+    useFindAndModify: false,
+  })
+    .then((data) => res.send({ result: 200, data: data }))
     .catch((err) => {
-      console.log("Error: ", err);
-      throw err;
+      console.log(err);
+      res.send({ result: 500, error: err.message });
     });
 };
 
 module.exports = {
   getUsers,
-  getUsersById,
   createUser,
   updateUser,
   deleteUser,

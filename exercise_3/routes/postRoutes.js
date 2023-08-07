@@ -1,20 +1,36 @@
-const express = require("express");
-const router = express.Router();
-const Controllers = require("../controllers");
+let express = require("express");
+let router = express.Router();
+let Controllers = require("../controllers"); // Import controllers, aka just pointing at controllers folder will tell index.js to target our endpoints for us
 
-// http://localhost:8080/api/posts
+
+// Base Route http://localhost:8000/api/posts
 router.get("/", (req, res) => {
-    Controllers.postController.getPosts(res);
-  });
+  Controllers.postsController.getPosts(res);
+});
 
-  // http://localhost:8080/api/posts/createPost
-router.post("/createPost", (req, res) => {
-    Controllers.postController.createPost(req.body, res);
-  });
+// Create a new post
+router.post("/create", (req, res) => {
+  Controllers.postsController.createPost(req.body, res);
+});
 
-  // http://localhost:8080/api/posts/updatePost/:id
-router.put("/updatePost/:id", (req, res) => {
-    Controllers.postController.updatePost(req, res);
-  });
+// Update a post by ID
+router.put("/:id", (req, res) => {
+  Controllers.postsController.updatePost(req, res);
+});
 
-  module.exports = router;
+// Delete a post by ID
+router.delete("/:id", (req, res) => {
+  Controllers.postsController.deletePost(req, res);
+});
+
+// Like a post by ID
+router.put("/:id/like", (req, res) => {
+  Controllers.postsController.likePost(req, res);
+});
+
+// Comment on a post by ID
+router.post("/:id/comment", (req, res) => {
+  Controllers.postsController.commentOnPost(req, res);
+});
+
+module.exports = router;
