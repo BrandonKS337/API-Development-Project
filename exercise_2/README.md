@@ -41,8 +41,26 @@ User - POST schema example
 }
 Posts - POST schema
 {
-    "title": "random lorem output text",
-  "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis, incidunt molestiae? Deserunt?",
-  "content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita libero, quaerat inventore corrupti laudantium omnis perferendis debitis voluptates velit pariatur cumque quia magnam consectetur beatae iusto dolorum, ut ipsa explicabo nisi. Nam impedit inventore quod libero vitae. Beatae quis, quibusdam nam ipsa itaque ad. Natus autem aspernatur labore delectus nihil blanditiis commodi, quod iste accusamus et nobis nulla voluptas necessitatibus reprehenderit illo."
- 
+"title": "random lorem output text",
+"description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis, incidunt molestiae? Deserunt?",
+"content": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Expedita libero, quaerat inventore corrupti laudantium omnis perferendis debitis voluptates velit pariatur cumque quia magnam consectetur beatae iusto dolorum, ut ipsa explicabo nisi. Nam impedit inventore quod libero vitae. Beatae quis, quibusdam nam ipsa itaque ad. Natus autem aspernatur labore delectus nihil blanditiis commodi, quod iste accusamus et nobis nulla voluptas necessitatibus reprehenderit illo."
 }
+
+check check posts or users for changes
+- http://localhost:8000/api/posts
+-http://localhost:8000/api/users
+
+Likes - PUT method
+- example: http://localhost:8000/api/posts/64d094358e8ee55d5a90c8b2/like
+- change Headers if needed: may need to add key:Content-Type and value: application/json....MAY need to
+- Body: none.
+- SEND IT
+
+Comments - POST method
+- example: http://localhost:8000/api/posts/64d094358e8ee55d5a90c8b2/comment
+- change Headers if needed: may need to add key:Content-Type and value: application/json....MAY need to
+- example body
+{
+  "text": "Easily Best post ever. Glad it only took 10hours to figure out how to comment on it!!!!!!"
+}
+- SEND IT
