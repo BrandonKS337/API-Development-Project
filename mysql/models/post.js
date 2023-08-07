@@ -4,45 +4,40 @@ let dbConnect = require("../dbConnect");
 
 const sequelizeInstance = dbConnect.Sequelize;
 
-class Post extends Model { }
-//Sequelize will create this table if it doesn't exist on startup
+class Posts extends Model {}
 
-Post.init({
+//Sequelize will create thiss table if it doesn't exist on startup
+Posts.init(
+  {
     id: {
-    type: DataTypes.INTEGER, 
-    allowNull: false, 
-    autoIncrement: true, 
-    primaryKey: true
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
     },
-
-    postTitle: {
-    type: DataTypes.STRING, 
-    allowNull: false, 
-    required: true
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      required: true,
     },
-
-    postDescription: {
-    type: DataTypes.STRING, 
-    allowNull: false, 
-    required: true
+    description: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      required: true,
     },
-
-    postImage: {
-    type: DataTypes.STRING, 
-    allowNull: false, 
-    required: false,
-    unique: true
+    content: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      required: true,
+      unique: true,
     },
-},
+  },
+  {
+    sequelize: sequelizeInstance,
+    modelName: "users", //use lowercase plural format here
+    timestamps: true,
+    // freezeTableName
+  }
+);
 
-    {
-    sequelize: sequelizeInstance, 
-    modelName: 'post', 
-    //use lowercase plural format
-    timestamps: true, 
-    freezeTableName: true
-    }
-)
-
-
-module.exports = Post;
+module.exports = Posts;

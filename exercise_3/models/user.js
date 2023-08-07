@@ -1,28 +1,73 @@
-/*
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+// const bcrypt = require("bcrypt");
+const { DataTypes, Model } = require("sequelize");
+let dbConnect = require("../dbConnect");
+const sequelizeInstance = dbConnect.Sequelize;
 
-const userSchema = new Schema({
-  //defining our keys
-  firstName: { type: String, trim: true, required: true },
-  lastName: { type: String, trim: true, required: true },
-  emailId: { type: String, trim: true, required: true },
-  password: { type: String },
-  createdAt: { type: Date, default: Date.now },
-  updatedAt: { type: Date, default: Date.now },
-});
+class User extends Model {}
 
-module.exports = mongoose.model("user", userSchema); 
-*/
+User.init(
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      required: true,
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      required: true,
+    },
+    emailId: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      required: true,
+      unique: true,
+    },
+    password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      required: true,
+    },
+    
+  },
+  {
+    sequelize: sequelizeInstance,
+    modelName: "users",
+    timestamps: true,
+    freezeTableName: true,
+    // hooks: {
+    //   beforeCreate: async (user) => {
+    //     if (user.password) {
+    //       const salt = await bcrypt.genSaltSync(10, "a");
+    //       user.password = bcrypt.hashSync(user.password, salt);
+    //     }
+    //   },
+    //   beforeUpdate: async (user) => {
+    //     if (user.password) {
+    //       const salt = await bcrypt.genSaltSync(10, "a");
+    //       user.password = bcrypt.hashSync(user.password, salt);
+    //     }
+    //   },
+    // },
+    // instanceMethods: {
+    //   validPassword: (password) => {
+    //     return bcrypt.compareSync(password, this.password);
+    //   },
+    // },
 
-/* The "user" mentioned in the above line should be in lowercase
-singular form ..whereas the actual collection name in
-mongodb will be in the plural form.
-Refer to mongoose documentation for more:
-https://www.npmjs.com/package/mongoose
-The first argument is the singular name of your collection.
-Mongoose automatically looks for the lowercase plural version.
-For example, if you use
-const MyModel = mongoose.model('Ticket', mySchema);
-Then MyModel will use the tickets collection, not the Ticket
-collection. */
+   
+  }
+);
+
+// User.prototype.validPassword = async (password, hash) => {
+//   return await bcrypt.compareSync(password, hash);
+// }
+
+
+module.exports = User;

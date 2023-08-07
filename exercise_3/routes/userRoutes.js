@@ -1,21 +1,33 @@
-let express = require('express')
-let router = express.Router()
-let Controllers = require('../controllers') //just pointing at controllers folder will tell index.js to target our endpoints for us
+const express = require("express");
+const router = express.Router();
+const Controllers = require("../controllers");
 
 router.get("/", (req, res) => {
-    Controllers.userController.getUsers(res);
+  Controllers.userController.getUsers(res);
+});
+
+router.get("/:id", (req, res) => {
+    Controllers.userController.getUsersById(req, res);
   });
-  
-  router.post("/create", (req, res) => {
-    Controllers.userController.createUser(req.body, res);
-  });
-  
-  router.put("/:id", (req, res) => {
-    Controllers.userController.updateUser(req, res);
-  });
-  
-  router.delete("/:id", (req, res) => {
-    Controllers.userController.deleteUser(req, res);
-  });
-  
-  module.exports = router;
+
+router.post("/createUser", (req, res) => {
+  Controllers.userController.createUsers(req.body, res);
+});
+
+router.post("/createPost", (req, res) => {
+  Controllers.userController.createPost(req.body, res);
+});
+
+router.put("/:id", (req, res) => {
+  Controllers.userController.updateUser(req, res);
+});
+
+router.delete("/:id", (req, res) => {
+  Controllers.userController.deleteUser(req, res);
+});
+
+router.post("/testPassword/:id", (req, res) => {
+  Controllers.userController.getUsersByIdTestPassword(req, res)
+})
+
+module.exports = router;

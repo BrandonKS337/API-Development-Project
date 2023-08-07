@@ -13,6 +13,7 @@ copy and pasted this code into previous exercise to just update both files for s
 
 
 Video reference: Wed July 5 Recording 2
+reference 26 min in for dbConnect and npm run server @32 min
 *** IMPORTANT. SWAPPING FROM mongodb TO MYsql FOR THIS ***
 
 
