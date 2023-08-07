@@ -7,3 +7,5 @@ Requirements
 - The system should be able to create users
 - The users should be able to create multiple posts (posts should be very basic, title/desc/img)
 - other users should be able to like the posts and comment on them
+
+copy and pasted this code into previous exercise to just update both files for sequelize requirement.

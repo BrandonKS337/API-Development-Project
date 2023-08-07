@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const Controllers = require("../controllers/postController");
+const Controllers = require("../controllers");
 
 // http://localhost:8080/api/posts
 router.get("/", (req, res) => {

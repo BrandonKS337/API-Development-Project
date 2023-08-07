@@ -1,53 +1,62 @@
-"use strict";
+const mongoose = require("mongoose")
 
-const Models = require("../models");
+// mongoose.connect(process.env.MONGODB_URI, {
+//   useNewUrlParser: true,
+//   useUnifiedTopology: true,
+//   useCreateIndex: true,
+// });
 
+const PostSchema = new mongoose.Schema({
+  _id: Number,
+  title: String,
+  content: String,
+  //can insert additional fields here later. keeping simple for now
+})
+
+// Define your Post model using the schema
+const Post = mongoose.model("Post", PostSchema);
+
+// Function to get all posts
 const getPosts = (res) => {
-    Models.Post.findAll({})
-      .then(function (data) {
-        res.send({ result: 200, data: data });
-      })
-      .catch((err) => {
-        console.log("Error: ", err);
-        throw err;
-      });
-  };
+  Post.find({})
+    .then(function (data) {
+      res.send({ result: 200, data: data });
+    })
+    .catch((err) => {
+      console.log("Error: ", err);
+      throw err;
+    });
+};
+// Function to create a new post
+const createPost = (data, res) => {
+  Post.create(data)
+    .then(function (data) {
+      res.send({ result: 201, data: data });
+    })
+    .catch((err) => {
+      console.log("Error: ", err);
+      throw err;
+    });
+};
+// Function to update a post
+const updatePost = (req, res) => {
+  Post.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    { new: true }
+  )
+    .then(function (data) {
+      res.send({ result: 200, data: data });
+    })
+    .catch((err) => {
+      console.log("Error: ", err);
+      throw err;
+    });
+};
 
-  const createPost = (data, res) => {
-    Models.Post.create(data)
-      .then(function (data) {
-        res.send({ result: 201, data: data });
-      })
-      .catch((err) => {
-        console.log("Error: ", err);
-        throw err;
-      });
-  };
 
-
-  //research how to increment likes... This queries the database for
-  //the posts and then returns the data from the req.params.id
-  const updatePost = (req, res) => {
-    Models.Post.update(req.body, { where: { id: req.params.id } })
-      .then(function (data) {
-        Models.Post.findAll({where: {id: req.params.id}})
-        .then (function(data) {
-            res.status(201).json(data);
-        })
-        .catch((err) => {
-            console.log("Error: ", err);
-            throw err;
-        });
-      })
-      .catch((err) => {
-        console.log("Error: ", err);
-        throw err;
-      });
-  };
-
-  module.exports = {
-    getPosts,
-    createPost,
-    updatePost,
-  }
-  
+module.exports = {
+  getPosts,
+  createPost,
+  updatePost
+}

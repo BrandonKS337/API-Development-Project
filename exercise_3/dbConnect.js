@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-require('dotenv').config();
+require('dotenv').config(); // Load environment variables from .env file
 
 // Get the MongoDB connection URL from the environment variable
 const dbURL = process.env.MONGODB_URI;
@@ -8,7 +8,7 @@ const dbURL = process.env.MONGODB_URI;
 mongoose.connect(dbURL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  // Remove the useCreateIndex option
+  useCreateIndex: true,
 });
 
 const db = mongoose.connection;

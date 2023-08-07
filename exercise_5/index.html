@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Exercise 5: Basic Chat app</title>
+    <style>
+      body {
+        margin: 0;
+        padding-bottom: 3rem;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+      }
+
+      #form {
+        background: rgba(0, 0, 0, 0.15);
+        padding: 0.25rem;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        height: 3rem;
+        box-sizing: border-box;
+        backdrop-filter: blur(10px);
+      }
+      #input {
+        border: none;
+        padding: 0 1rem;
+        flex-grow: 1;
+        border-radius: 2rem;
+        margin: 0.25rem;
+      }
+      #input:focus {
+        outline: none;
+      }
+      #form > button {
+        background: #333;
+        border: none;
+        padding: 0 1rem;
+        margin: 0.25rem;
+        border-radius: 3px;
+        outline: none;
+        color: #fff;
+      }
+
+      #messages {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+      }
+      #messages > li {
+        padding: 0.5rem 1rem;
+      }
+      #messages > li:nth-child(odd) {
+        background: #efefef;
+      }
+    </style>
+
+  </head>
+  <body>
+    <h2>Exercise 5: Basic Chat app</h2>
+    <ul id="messages"></ul>
+    <form id="form" action="">
+      <div>
+        <input id="nickname" placeholder="Enter your nickname" />
+        <button id="set-nickname">Set Nickname</button>
+      </div>
+      <input id="input" autocomplete="off" /><button>Send</button>
+    </form>
+  
+    
+  
+    <div id="typing-status"></div>
+  
+    <div id="connected-users">
+      <h3>Connected Users</h3>
+      <ul id="user-list"></ul>
+    </div>
+    
+  
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      let socket = io();
+      let form = document.getElementById("form");
+      let input = document.getElementById("input");
+      let messages = document.getElementById("messages");
+      let setNicknameButton = document.getElementById("set-nickname");
+      let nicknameInput = document.getElementById("nickname");
+      let typingStatus = document.getElementById("typing-status");
+      let userList = document.getElementById("user-list");
+  
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (input.value) {
+          socket.emit("chat message", input.value);
+          input.value = "";
+        }
+      });
+  
+      setNicknameButton.addEventListener("click", () => {
+        const nickname = nicknameInput.value.trim();
+        if (nickname !== "") {
+          socket.emit("set nickname", nickname);
+          nicknameInput.value = "";
+        }
+      });
+  
+      input.addEventListener("input", () => {
+        socket.emit("typing");
+      });
+  
+      socket.on("typing", (user) => {
+        typingStatus.textContent = `${user} is typing...`;
+        setTimeout(() => {
+          typingStatus.textContent = "";
+        }, 2000);
+      });
+  
+      socket.on("connected users", (users) => {
+        users.forEach((user) => {
+          const userItem = document.createElement("li");
+          userItem.textContent = user;
+          userList.appendChild(userItem);
+        });
+      });
+  
+      socket.on("user joined", (nickname) => {
+        const userItem = document.createElement("li");
+        userItem.textContent = nickname;
+        userList.appendChild(userItem);
+        
+        const item = document.createElement("li");
+        item.textContent = `${nickname} joined the chat`;
+        messages.appendChild(item);
+      });
+  
+      socket.on("user left", (nickname) => {
+        const userItem = userList.querySelector(`li:contains("${nickname}")`);
+        if (userItem) {
+          userItem.remove();
+        }
+  
+        const item = document.createElement("li");
+        item.textContent = `${nickname} left the chat`;
+        messages.appendChild(item);
+      });
+  
+      socket.on("chat message", function (msg) {
+        let item = document.createElement("li");
+        item.textContent = msg;
+        messages.appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
+      });
+  
+      socket.on("get nickname", () => {
+        socket.emit("set nickname", "Anonymous");
+      });
+  
+      socket.on("set nickname", (nickname) => {
+        socket.nickname = nickname;
+        socket.broadcast.emit("user joined", nickname);
+      });
+  
+      socket.emit("get connected users");
+  
+      socket.on("disconnect", () => {
+        socket.emit("disconnected", "browser user disconnected");
+      });
+  
+      socket.on("connection", (msg) => {
+        socket.emit("get nickname");
+      });
+  
+    </script>
+  </body>
+</html>
