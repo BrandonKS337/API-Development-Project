@@ -25,10 +25,11 @@ User - POST schema example
 "firstName": "John",
 "lastName": "JingleHiemerSchmit",
 "emailId": "johnJS@email.com",
-"password": 123456
+"password": "123456"
 }
 
-Posts - POST schema
+to create Posts - POST schema
+http://localhost:8000/api/users/createPost
 {
 "title": "random lorem output text",
 "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis, incidunt molestiae? Deserunt?",

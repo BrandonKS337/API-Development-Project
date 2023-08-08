@@ -3,13 +3,26 @@ let Models = require("../models"); //matches index.js
 
 const getPosts = (res) => {
   //finds all Posts
-  Models.Post.find({})
+  Models.Post.findAll({})
     .then((data) => res.send({ result: 200, data: data }))
     .catch((err) => {
       console.log(err);
       res.send({ result: 500, error: err.message });
     });
 };
+
+const getPostsById = (req, res) => {
+  Models.Post.findAll({
+    where: {
+      id: req.params.id
+    }
+  })
+  .then((data) => res.send({ result: 200, data: data }))
+    .catch((err) => {
+      console.log(err);
+      res.send({ result: 500, error: err.message });
+    });
+}
 
 const createPost = (data, res) => {
   //creates a new Post using JSON data POSTed in request body
@@ -26,8 +39,8 @@ const createPost = (data, res) => {
 const updatePost = (req, res) => {
   //updates the Post matching the ID from the param using JSON data POSTed in request body
   console.log(req.body);
-  Models.Posts.findByIdAndUpdate(req.params.id, req.body, {
-    useFindAndModify: false,
+  Models.Post.update(req.body, {
+    where: { id: req.params.id },
   })
     .then((data) => res.send({ result: 200, data: data }))
     .catch((err) => {
@@ -37,7 +50,7 @@ const updatePost = (req, res) => {
 };
 const deletePost = (req, res) => {
   //deletes the Post matching the ID from the param
-  Models.Posts.findByIdAndRemove(req.params.id, req.body, {
+  Models.Post.findByIdAndRemove(req.params.id, req.body, {
     useFindAndModify: false,
   })
     .then((data) => res.send({ result: 200, data: data }))
@@ -49,36 +62,35 @@ const deletePost = (req, res) => {
 
 //adding in functions for liking and commenting on posts
 const likePost = (req, res) => {
-    Models.Posts.findByIdAndUpdate(
-        req.params.id,
-        {$inc: { likes: 1 }}, //increments by 1 every time post is liked
-        { new: true}
-    )
-    .then((data) => res.send({ result: 200, data: data})) //sends update back if successfully liked lol
+  Models.Post.findByIdAndUpdate(
+    req.params.id,
+    { $inc: { likes: 1 } }, //increments by 1 every time post is liked
+    { new: true }
+  )
+    .then((data) => res.send({ result: 200, data: data })) //sends update back if successfully liked lol
     .catch((err) => {
-        console.log(err);
-        res.send({ result: 500, error: err.message }) //if bad like then error internal server error sent back
+      console.log(err);
+      res.send({ result: 500, error: err.message }); //if bad like then error internal server error sent back
     });
 };
 
 const commentOnPost = (req, res) => {
-    const comment = {
-        text: req.body.text,
-        createdAt: new Date(),
-    };
+  const comment = {
+    text: req.body.text,
+    createdAt: new Date(),
+  };
 
-    Models.Posts.findByIdAndUpdate(
-        req.params.id,
-        { $push: { comments: comment } }, //this line is taking the comment and pushing it into the existing array.
-        { new: true }
-    )
+  Models.Post.findByIdAndUpdate(
+    req.params.id,
+    { $push: { comments: comment } }, //this line is taking the comment and pushing it into the existing array.
+    { new: true }
+  )
     .then((data) => res.send({ result: 200, data: data }))
     .catch((err) => {
-        console.log(err);
-        res.send({ result: 500, error: err.message }) //if bad comment add then error internal server error sent back
-
-    })
-}
+      console.log(err);
+      res.send({ result: 500, error: err.message }); //if bad comment add then error internal server error sent back
+    });
+};
 
 module.exports = {
   getPosts,
@@ -86,5 +98,6 @@ module.exports = {
   updatePost,
   deletePost,
   commentOnPost,
-  likePost
+  likePost,
+  getPostsById
 };

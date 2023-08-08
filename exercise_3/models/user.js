@@ -1,10 +1,11 @@
-// const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt");
 const { DataTypes, Model } = require("sequelize");
 let dbConnect = require("../dbConnect");
 const sequelizeInstance = dbConnect.Sequelize;
 
-class User extends Model {}
+class User extends Model {} 
 
+//checks for existing table and if it doesn't this model creates
 User.init(
   {
     id: {
@@ -40,30 +41,18 @@ User.init(
     modelName: "users",
     timestamps: true,
     freezeTableName: true,
-    // hooks: {
-    //   beforeCreate: async (user) => {
-    //     if (user.password) {
-    //       const salt = await bcrypt.genSaltSync(10, "a");
-    //       user.password = bcrypt.hashSync(user.password, salt);
-    //     }
-    //   },
-    //   beforeUpdate: async (user) => {
-    //     if (user.password) {
-    //       const salt = await bcrypt.genSaltSync(10, "a");
-    //       user.password = bcrypt.hashSync(user.password, salt);
-    //     }
-    //   },
-    // },
-    // instanceMethods: {
-    //   validPassword: (password) => {
-    //     return bcrypt.compareSync(password, this.password);
-    //   },
-    // },
-  }
+    defaultScope: {
+      attributes: {
+        exclude: ['password']
+      }
+    }, 
+    scopes: {
+      withPassword: {
+        attributes: {}
+      }
+    }
+  },
+  
 );
-
-// User.prototype.validPassword = async (password, hash) => {
-//   return await bcrypt.compareSync(password, hash);
-// }
 
 module.exports = User;

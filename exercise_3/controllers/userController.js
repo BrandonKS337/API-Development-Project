@@ -4,6 +4,7 @@ const Models = require("../models");
 const bcrypt = require("bcrypt");
 
 const getUsers = (res) => {
+  //promise based functions. .findall is the promise and .then resolves the promise doing something with the data found.
   Models.User.findAll({})
     //finds all users
     .then(function (data) {
