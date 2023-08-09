@@ -16,3 +16,13 @@ https://docs.google.com/spreadsheets/d/15iDpjqyBkSse9wcN7vvQvORBvX8P_ivAjm-iKXp7
 
 To use:
 use npm i and then run with npm run server
+
+to test.
+GET http://www.boredapi.com/api/activity?participants=<put # of participants>
+//pulls a random activity based on your participants count
+ex: http://localhost:8000/api/bored/participants/1 <change#. avoid 6 and 7 due to api not hosting those options>
+
+
+GET http://www.boredapi.com/api/activity
+//pulls a random activity
+ex: http://localhost:8000/api/bored/activity //pull random option
