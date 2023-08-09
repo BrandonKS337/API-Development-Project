@@ -6,3 +6,13 @@ add new functionality to your application.
 Try to include support for either or both types of request parameters:
 ● via the query - eg. GET http://localhost:8080/api/users?page=1
 ● via the params - eg. PUT http://localhost:8080/api/users/1234
+
+https://docs.google.com/spreadsheets/d/15iDpjqyBkSse9wcN7vvQvORBvX8P_ivAjm-iKXp776Y/edit#gid=0
+
+
+//for sake of time I am building a new express app in order to complete this exercise
+
+//note: for request params it is more secure to do req.body vs doing req.params
+
+To use:
+use npm i and then run with npm run server
