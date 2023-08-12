@@ -19,14 +19,32 @@ reference 26 min in for dbConnect and npm run server @32 min
 
 COPIED from exercise 2
 postman checks
+User - GET users
+http://localhost:8000/api/users
+
 
 User - POST schema example
+http://localhost:8000/api/users/createUser
 {
 "firstName": "John",
 "lastName": "JingleHiemerSchmit",
 "emailId": "johnJS@email.com",
 "password": "123456"
 }
+
+USER - PUT aka Update Schema
+http://localhost:8000/api/users/2
+{
+"firstName": "23",
+"lastName": "23",
+"emailId": "emai3l@email",
+"password": "123456"
+}
+
+USER - DELETE aka.....delete user
+http://localhost:8000/api/users/2
+
+
 
 to create Posts - POST schema
 http://localhost:8000/api/users/createPost
